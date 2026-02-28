@@ -18,3 +18,13 @@ Use this sandbox: https://www.pythonsandbox.com/turtle
 - Click **ROLL DICE** to roll.
 - If the dice sum matches your guess, you win.
 - Click **PLAY AGAIN** to start another round.
+
+### Loosing bet
+![img.png](images/Loosing-bet.png)
+
+![img.png](images/Loose.png)
+
+### Winning bet
+![img.png](images/Winning-bet.png)
+
+![img.png](images/Win.png)
