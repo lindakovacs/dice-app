@@ -17,6 +17,10 @@ class DiceGame:
         self.dice2 = 1
         self.dice_sum = 2
 
+        # Dice roll tracking
+        self.roll_count = 0
+        self.dice_counts = {2: 0, 3: 0, 5: 0}
+
         # Game state
         self.game_state = "guessing"  # guessing, rolling, result
         self.center_x = -20
@@ -234,10 +238,10 @@ class DiceGame:
         self.stats_display.clear()
         if self.total_games > 0:
             win_rate = (self.total_wins / self.total_games) * 100
-            self.stats_display.write("Games: {} | Wins: {} | Win Rate: {:.1f}%".format(self.total_games, self.total_wins, win_rate), 
+            self.stats_display.write("Games: {} | Wins: {} | Win Rate: {:.1f}%".format(self.total_games, self.total_wins, win_rate),
                                     align="center", font=("Arial", 14, "normal"))
         else:
-            self.stats_display.write("Games: 0 | Wins: 0 | Win Rate: 0.0%", 
+            self.stats_display.write("Games: 0 | Wins: 0 | Win Rate: 0.0%",
                                     align="center", font=("Arial", 14, "normal"))
 
     def draw_background(self):
@@ -297,10 +301,27 @@ class DiceGame:
         self.dice2 = random.randint(1, 6)
         self.dice_sum = self.dice1 + self.dice2
 
+        # Track and print dice rolls
+        self.roll_count += 1
+        print("Roll {}: Dice 1 = {}, Dice 2 = {}, Sum = {}".format(self.roll_count, self.dice1, self.dice2, self.dice_sum))
+
+        # Track specific dice values
+        if self.dice1 in self.dice_counts:
+            self.dice_counts[self.dice1] += 1
+        if self.dice2 in self.dice_counts:
+            self.dice_counts[self.dice2] += 1
+
         # Update stats
         self.total_games += 1
         if self.dice_sum == self.current_guess:
             self.total_wins += 1
+
+        # Print summary if reaching 10 rolls
+        if self.roll_count % 10 == 0:
+            print("\n--- Summary (After {} rolls) ---".format(self.roll_count))
+            print("Number 2: Appeared {} times.".format(self.dice_counts[2]))
+            print("Number 3: Appeared {} times.".format(self.dice_counts[3]))
+            print("Number 5: Appeared {} times.\n".format(self.dice_counts[5]))
 
         self.game_state = "result"
         self.update_display()
