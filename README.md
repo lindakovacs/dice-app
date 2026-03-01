@@ -28,3 +28,7 @@ Use this sandbox: https://www.pythonsandbox.com/turtle
 ![img.png](images/Winning-bet.png)
 
 ![img.png](images/Win.png)
+
+### Tracking dice rolls
+![img.png](images/Tracking-win.png)
+![img.png](images/Tracking-loose.png)
