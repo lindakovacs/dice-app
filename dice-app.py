@@ -19,7 +19,7 @@ class DiceGame:
 
         # Dice roll tracking
         self.roll_count = 0
-        self.dice_counts = {2: 0, 3: 0, 5: 0}
+        self.sum_counts = {2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}
 
         # Game state
         self.game_state = "guessing"  # guessing, rolling, result
@@ -38,7 +38,7 @@ class DiceGame:
         if hasattr(self.root, "title"):
             self.root.title("DICE GUESSING GAME")
         if hasattr(self.root, "bgcolor"):
-            self.root.bgcolor("#3498db")
+            self.root.bgcolor("#5dade2")
         if hasattr(self.root, "setup"):
             self.root.setup(width=520, height=450)
         if hasattr(self.root, "tracer"):
@@ -109,6 +109,7 @@ class DiceGame:
         turtle_obj.goto(x, y)
 
         # Draw dice square
+        turtle_obj.pencolor("white")
         turtle_obj.pendown()
         turtle_obj.fillcolor("white")
         turtle_obj.begin_fill()
@@ -156,6 +157,7 @@ class DiceGame:
         """Draw a button"""
         turtle_obj.clear()
         turtle_obj.goto(x, y)
+        turtle_obj.pencolor(color)
         turtle_obj.pendown()
         turtle_obj.fillcolor(color)
         turtle_obj.begin_fill()
@@ -254,7 +256,7 @@ class DiceGame:
         for _ in range(2):
             self.bg_display.forward(520)
             self.bg_display.right(90)
-            self.bg_display.forward(560)
+            self.bg_display.forward(500)
             self.bg_display.right(90)
         self.bg_display.end_fill()
         self.bg_display.penup()
@@ -303,13 +305,11 @@ class DiceGame:
 
         # Track and print dice rolls
         self.roll_count += 1
-        print("Roll {}: Dice 1 = {}, Dice 2 = {}, Sum = {}".format(self.roll_count, self.dice1, self.dice2, self.dice_sum))
+        print("Roll {}: Guess = {}, Dice 1 = {}, Dice 2 = {}, Sum = {}".format(self.roll_count, self.current_guess, self.dice1, self.dice2, self.dice_sum))
 
-        # Track specific dice values
-        if self.dice1 in self.dice_counts:
-            self.dice_counts[self.dice1] += 1
-        if self.dice2 in self.dice_counts:
-            self.dice_counts[self.dice2] += 1
+        # Track sum values
+        if self.dice_sum in self.sum_counts:
+            self.sum_counts[self.dice_sum] += 1
 
         # Update stats
         self.total_games += 1
@@ -319,9 +319,11 @@ class DiceGame:
         # Print summary if reaching 10 rolls
         if self.roll_count % 10 == 0:
             print("\n--- Summary (After {} rolls) ---".format(self.roll_count))
-            print("Number 2: Appeared {} times.".format(self.dice_counts[2]))
-            print("Number 3: Appeared {} times.".format(self.dice_counts[3]))
-            print("Number 5: Appeared {} times.\n".format(self.dice_counts[5]))
+            # Sort by count (descending), then by sum value (descending) for ties
+            sorted_sums = sorted([(k, v) for k, v in self.sum_counts.items() if v > 0], key=lambda x: (-x[1], -x[0]))
+            for sum_value, count in sorted_sums:
+                print("Sum = {}: Appeared {} times.".format(sum_value, count))
+            print("")
 
         self.game_state = "result"
         self.update_display()

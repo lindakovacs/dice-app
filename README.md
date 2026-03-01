@@ -19,6 +19,9 @@ Use this sandbox: https://www.pythonsandbox.com/turtle
 - If the dice sum matches your guess, you win.
 - Click **PLAY AGAIN** to start another round.
 
+### Tracking dice rolls
+![img.png](images/Tracking.png)
+
 ### Loosing bet
 ![img.png](images/Loosing-bet.png)
 
@@ -28,7 +31,3 @@ Use this sandbox: https://www.pythonsandbox.com/turtle
 ![img.png](images/Winning-bet.png)
 
 ![img.png](images/Win.png)
-
-### Tracking dice rolls
-![img.png](images/Tracking-win.png)
-![img.png](images/Tracking-loose.png)
